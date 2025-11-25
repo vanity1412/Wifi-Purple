@@ -19,7 +19,7 @@ class WiFiPurpleGUI:
     
     def __init__(self, root):
         self.root = root
-        self.root.title("🌐 WiFi-Purple - WiFi Security Testing Tool")
+        self.root.title("WiFi-Purple - WiFi Security Testing Tool")
         self.root.geometry("1200x800")
         self.root.resizable(True, True)
         
@@ -71,7 +71,7 @@ class WiFiPurpleGUI:
         
         title_label = ttk.Label(
             header_frame,
-            text="🌐 WiFi-Purple 🌐",
+            text="WiFi-Purple",
             style='Title.TLabel'
         )
         title_label.pack()
@@ -86,7 +86,7 @@ class WiFiPurpleGUI:
         # Quick Settings Panel
         settings_frame = tk.LabelFrame(
             self.root,
-            text="⚙️ Quick Settings",
+            text=" Quick Settings ",
             bg=self.bg_color,
             fg=self.warning_color,
             font=('Arial', 10, 'bold'),
@@ -138,7 +138,7 @@ class WiFiPurpleGUI:
         # Help button
         help_btn = tk.Button(
             settings_inner,
-            text="❓ Help",
+            text="[?] Help",
             command=self.show_help,
             bg=self.info_color,
             fg='white',
@@ -154,7 +154,7 @@ class WiFiPurpleGUI:
         
         # Tab 1: Main Tools
         tools_tab = tk.Frame(main_container, bg=self.bg_color)
-        main_container.add(tools_tab, text="🛠️ Main Tools")
+        main_container.add(tools_tab, text=" Main Tools ")
         
         # Split tools tab
         tools_left = tk.Frame(tools_tab, bg=self.bg_color)
@@ -171,13 +171,13 @@ class WiFiPurpleGUI:
         
         # Tab 2: Advanced
         advanced_tab = tk.Frame(main_container, bg=self.bg_color)
-        main_container.add(advanced_tab, text="⚡ Advanced")
+        main_container.add(advanced_tab, text=" Advanced ")
         
         self.create_advanced_tab(advanced_tab)
         
         # Tab 3: Saved Data
         saved_tab = tk.Frame(main_container, bg=self.bg_color)
-        main_container.add(saved_tab, text="💾 Saved Data")
+        main_container.add(saved_tab, text=" Saved Data ")
         
         self.create_saved_data_tab(saved_tab)
         
@@ -185,7 +185,7 @@ class WiFiPurpleGUI:
         status_frame = tk.Frame(self.root, bg=self.bg_color)
         status_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=5)
         
-        self.status_var = tk.StringVar(value="✅ Ready")
+        self.status_var = tk.StringVar(value="[+] Ready")
         status_bar = tk.Label(
             status_frame,
             textvariable=self.status_var,
@@ -200,7 +200,7 @@ class WiFiPurpleGUI:
         # Clear console button
         clear_btn = tk.Button(
             status_frame,
-            text="🗑️ Clear Console",
+            text="[X] Clear Console",
             command=self.clear_console,
             bg=self.error_color,
             fg='white',
@@ -215,7 +215,7 @@ class WiFiPurpleGUI:
         # Setup Section
         setup_frame = tk.LabelFrame(
             parent,
-            text="🔧 Setup",
+            text=" Setup ",
             bg=self.bg_color,
             fg=self.success_color,
             font=('Arial', 10, 'bold')
@@ -223,10 +223,10 @@ class WiFiPurpleGUI:
         setup_frame.pack(fill=tk.X, pady=5, padx=5)
         
         setup_buttons = [
-            ("🔧 Start Monitor", self.start_monitor_mode, "Enable monitor mode"),
-            ("⏹️ Stop Monitor", self.stop_monitor_mode, "Disable monitor mode"),
-            ("📡 View Interfaces", self.view_interfaces, "Show interfaces"),
-            ("🔄 Restart Network", self.restart_network, "Restart network"),
+            ("[+] Start Monitor", self.start_monitor_mode, "Enable monitor mode"),
+            ("[-] Stop Monitor", self.stop_monitor_mode, "Disable monitor mode"),
+            ("[i] View Interfaces", self.view_interfaces, "Show interfaces"),
+            ("[R] Restart Network", self.restart_network, "Restart network"),
         ]
         
         for text, command, tooltip in setup_buttons:
@@ -235,7 +235,7 @@ class WiFiPurpleGUI:
         # Scanning Section
         scan_frame = tk.LabelFrame(
             parent,
-            text="🔍 Scanning",
+            text=" Scanning ",
             bg=self.bg_color,
             fg=self.info_color,
             font=('Arial', 10, 'bold')
@@ -243,8 +243,8 @@ class WiFiPurpleGUI:
         scan_frame.pack(fill=tk.X, pady=5, padx=5)
         
         scan_buttons = [
-            ("🔍 Scan Networks", self.scan_networks, "Scan WiFi networks"),
-            ("🎯 Capture Handshake", self.capture_handshake, "Capture handshake"),
+            ("[S] Scan Networks", self.scan_networks, "Scan WiFi networks"),
+            ("[C] Capture Handshake", self.capture_handshake, "Capture handshake"),
         ]
         
         for text, command, tooltip in scan_buttons:
@@ -253,7 +253,7 @@ class WiFiPurpleGUI:
         # Attack Section
         attack_frame = tk.LabelFrame(
             parent,
-            text="⚡ Attacks",
+            text=" Attacks ",
             bg=self.bg_color,
             fg=self.error_color,
             font=('Arial', 10, 'bold')
@@ -261,9 +261,9 @@ class WiFiPurpleGUI:
         attack_frame.pack(fill=tk.X, pady=5, padx=5)
         
         attack_buttons = [
-            ("🔓 Crack Password", self.crack_password, "Crack handshake"),
-            ("⚡ WPS Attack", self.wps_attack, "WPS PIN attack"),
-            ("📶 Fake AP", self.fake_ap, "Create fake AP"),
+            ("[K] Crack Password", self.crack_password, "Crack handshake"),
+            ("[W] WPS Attack", self.wps_attack, "WPS PIN attack"),
+            ("[F] Fake AP", self.fake_ap, "Create fake AP"),
         ]
         
         for text, command, tooltip in attack_buttons:
@@ -272,7 +272,7 @@ class WiFiPurpleGUI:
         # Utilities Section
         util_frame = tk.LabelFrame(
             parent,
-            text="🛠️ Utilities",
+            text=" Utilities ",
             bg=self.bg_color,
             fg=self.warning_color,
             font=('Arial', 10, 'bold')
@@ -280,7 +280,7 @@ class WiFiPurpleGUI:
         util_frame.pack(fill=tk.X, pady=5, padx=5)
         
         util_buttons = [
-            ("🎭 Change MAC", self.change_mac, "Spoof MAC address"),
+            ("[M] Change MAC", self.change_mac, "Spoof MAC address"),
         ]
         
         for text, command, tooltip in util_buttons:
@@ -312,7 +312,7 @@ class WiFiPurpleGUI:
         """Create output console with controls"""
         console_label = tk.Label(
             parent,
-            text="📟 Output Console",
+            text="Output Console",
             bg=self.bg_color,
             fg=self.warning_color,
             font=('Arial', 11, 'bold')
@@ -336,7 +336,7 @@ class WiFiPurpleGUI:
         """Create advanced tools tab"""
         info_label = tk.Label(
             parent,
-            text="⚡ Advanced Tools - Coming Soon",
+            text="Advanced Tools - Coming Soon",
             bg=self.bg_color,
             fg=self.accent_color,
             font=('Arial', 14, 'bold')
@@ -357,7 +357,7 @@ class WiFiPurpleGUI:
         """Create saved data management tab"""
         tk.Label(
             parent,
-            text="💾 Saved Handshakes & Data",
+            text="Saved Handshakes & Data",
             bg=self.bg_color,
             fg=self.accent_color,
             font=('Arial', 12, 'bold')
@@ -388,7 +388,7 @@ class WiFiPurpleGUI:
         
         tk.Button(
             btn_frame,
-            text="🔄 Refresh List",
+            text="[R] Refresh List",
             command=self.refresh_saved_files,
             bg=self.button_color,
             fg='white',
@@ -398,7 +398,7 @@ class WiFiPurpleGUI:
         
         tk.Button(
             btn_frame,
-            text="📂 Open Folder",
+            text="[O] Open Folder",
             command=lambda: os.system("xdg-open /tmp &"),
             bg=self.info_color,
             fg='white',
@@ -411,26 +411,26 @@ class WiFiPurpleGUI:
     def show_welcome_message(self):
         """Show welcome message"""
         welcome = """
-╔══════════════════════════════════════════════════════════════╗
-║           Welcome to WiFi-Purple Security Tool!             ║
-╚══════════════════════════════════════════════════════════════╝
+================================================================
+           Welcome to WiFi-Purple Security Tool!
+================================================================
 
-📚 Quick Start Guide:
+[Quick Start Guide]
 1. Start Monitor Mode on your WiFi adapter
 2. Scan for nearby networks
 3. Select your target and capture handshake
 4. Crack the password using a wordlist
 
-⚠️  LEGAL WARNING:
+[!] LEGAL WARNING:
 Only use this tool on networks you own or have permission to test!
 Unauthorized access to networks is illegal.
 
-💡 Tips:
+[*] Tips:
 - Right-click buttons for more info
 - Use Quick Settings to set your interface names
 - Check the Saved Data tab for captured files
 
-Ready to start! 🚀
+Ready to start!
 """
         self.log(welcome, self.info_color)
     
@@ -442,33 +442,34 @@ Ready to start! 🚀
     def show_help(self):
         """Show help dialog"""
         help_text = """
-🌐 WiFi-Purple Help Guide
+WiFi-Purple Help Guide
+======================
 
 SETUP:
-• Start Monitor Mode: Enable monitoring on WiFi adapter
-• Stop Monitor Mode: Return to normal mode
-• View Interfaces: See all network interfaces
-• Restart Network: Fix network issues
+- Start Monitor Mode: Enable monitoring on WiFi adapter
+- Stop Monitor Mode: Return to normal mode
+- View Interfaces: See all network interfaces
+- Restart Network: Fix network issues
 
 SCANNING:
-• Scan Networks: Find nearby WiFi networks
-• Capture Handshake: Capture WPA/WPA2 handshake
+- Scan Networks: Find nearby WiFi networks
+- Capture Handshake: Capture WPA/WPA2 handshake
 
 ATTACKS:
-• Crack Password: Use wordlist to crack handshake
-• WPS Attack: Attack WPS-enabled routers
-• Fake AP: Create fake access points
+- Crack Password: Use wordlist to crack handshake
+- WPS Attack: Attack WPS-enabled routers
+- Fake AP: Create fake access points
 
 UTILITIES:
-• Change MAC: Spoof your MAC address
+- Change MAC: Spoof your MAC address
 
 TIPS:
-✓ Always start with Monitor Mode
-✓ Use large wordlists for better success
-✓ Be patient - attacks take time
-✓ Check Saved Data tab for captures
+[+] Always start with Monitor Mode
+[+] Use large wordlists for better success
+[+] Be patient - attacks take time
+[+] Check Saved Data tab for captures
 
-⚠️ Use responsibly and legally!
+[!] Use responsibly and legally!
 """
         messagebox.showinfo("Help Guide", help_text)
     
@@ -531,12 +532,12 @@ TIPS:
                 process.wait()
                 
                 if process.returncode == 0:
-                    self.log(f"\n✅ {description} completed successfully!", self.success_color)
+                    self.log(f"\n[+] {description} completed successfully!", self.success_color)
                 else:
-                    self.log(f"\n❌ Command failed with code {process.returncode}", self.error_color)
+                    self.log(f"\n[!] Command failed with code {process.returncode}", self.error_color)
                 
             except Exception as e:
-                self.log(f"\n❌ Error: {str(e)}", self.error_color)
+                self.log(f"\n[!] Error: {str(e)}", self.error_color)
             
             self.status_var.set("Ready")
         
@@ -552,7 +553,7 @@ TIPS:
             f"Start monitor mode on {interface}?\n\nThis will:\n• Kill interfering processes\n• Enable monitor mode\n• Change interface to {interface}mon"
         ):
             self.log(f"\n{'='*60}", self.accent_color)
-            self.log("🔧 Starting Monitor Mode...", self.accent_color)
+            self.log("[+] Starting Monitor Mode...", self.accent_color)
             cmd = f"airmon-ng check kill && airmon-ng start {interface}"
             self.run_command_async(cmd, "Starting Monitor Mode")
             
@@ -568,7 +569,7 @@ TIPS:
             f"Stop monitor mode on {interface}?"
         ):
             self.log(f"\n{'='*60}", self.accent_color)
-            self.log("⏹️ Stopping Monitor Mode...", self.accent_color)
+            self.log("[-] Stopping Monitor Mode...", self.accent_color)
             cmd = f"airmon-ng stop {interface}"
             self.run_command_async(cmd, "Stopping Monitor Mode")
     
@@ -587,11 +588,11 @@ TIPS:
         interface = self.monitor_interface_var.get()
         
         self.log(f"\n{'='*60}", self.accent_color)
-        self.log("🔍 Starting Network Scan...", self.accent_color)
+        self.log("[*] Starting Network Scan...", self.accent_color)
         self.log(f"Interface: {interface}", self.info_color)
-        self.log("\n⚠️ Opening new terminal for network scanning...", self.warning_color)
-        self.log("⚠️ Press CTRL+C in the terminal window to stop", self.error_color)
-        self.log("\n💡 TIP: Note down the BSSID and Channel of your target!", self.info_color)
+        self.log("\n[!] Opening new terminal for network scanning...", self.warning_color)
+        self.log("[!] Press CTRL+C in the terminal window to stop", self.error_color)
+        self.log("\n[*] TIP: Note down the BSSID and Channel of your target!", self.info_color)
         
         # Open in new terminal window with larger size
         # xterm: -geometry WIDTHxHEIGHT (columns x rows)
@@ -609,9 +610,9 @@ TIPS:
             try:
                 # Try gnome-terminal
                 subprocess.Popen(alt_cmd, shell=True)
-                self.log("✅ Scan started in new terminal window", self.success_color)
+                self.log("[+] Scan started in new terminal window", self.success_color)
             except Exception as e:
-                self.log(f"❌ Could not open terminal: {e}", self.error_color)
+                self.log(f"[!] Could not open terminal: {e}", self.error_color)
     
     def capture_handshake(self):
         """Capture handshake"""
@@ -623,8 +624,8 @@ TIPS:
             "Do you want to scan for networks first?\n\n(Recommended if you don't know the target details)"
         ):
             self.log(f"\n{'='*60}", self.accent_color)
-            self.log("🔍 Opening scan window - Find your target...", self.accent_color)
-            self.log("💡 Note the BSSID and Channel!", self.info_color)
+            self.log("[*] Opening scan window - Find your target...", self.accent_color)
+            self.log("[*] Note the BSSID and Channel!", self.info_color)
             
             # Open scan in new terminal with larger size
             try:
@@ -640,7 +641,7 @@ TIPS:
         # Now get target details with improved dialog
         dialog = ImprovedInputDialog(
             self.root,
-            "🎯 Enter Target Details",
+            "Enter Target Details",
             [
                 ("Target BSSID (MAC)", self.last_bssid, "Example: AA:BB:CC:DD:EE:FF"),
                 ("Channel", self.last_channel, "Example: 6"),
@@ -661,10 +662,10 @@ TIPS:
             self.last_channel = channel
             
             self.log(f"\n{'='*60}", self.accent_color)
-            self.log("🎯 Starting Handshake Capture...", self.accent_color)
+            self.log("[*] Starting Handshake Capture...", self.accent_color)
             self.log(f"Target: {bssid} on Channel {channel}", self.info_color)
             self.log(f"Output: {output}-01.cap", self.info_color)
-            self.log("\n⚠️ Opening capture windows...", self.warning_color)
+            self.log("\n[!] Opening capture windows...", self.warning_color)
             
             # Open capture in new terminal with both commands
             capture_cmd = f"airodump-ng -c {channel} --bssid {bssid} -w {output} {interface}"

